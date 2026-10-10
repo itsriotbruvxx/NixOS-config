@@ -111,6 +111,7 @@
     pkgs.libnotify
     pkgs.wget
     pkgs.awww
+    pkgs.home-manager
     pkgs.kitty
     pkgs.rofi
     pkgs.vim
