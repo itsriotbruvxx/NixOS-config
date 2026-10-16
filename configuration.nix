@@ -1,4 +1,3 @@
-
 { inputs, config, pkgs, ... }:
 
 {
@@ -41,8 +40,8 @@
 
   services.xserver.enable = true;
 
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
 
   services.xserver.xkb = {
     layout = "us";
@@ -61,15 +60,15 @@
     jack.enable = true;
   };
 
-    xdg.portal.enable = true;
-    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   users.users."riotbruvxx" = {
     isNormalUser = true;
     description = "riotbruvxx";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      kdePackages.kate
+      gnome-text-editor
     ];
   };
 
@@ -77,29 +76,20 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  programs.hyprland.enable = true;
-
   programs.steam = {
     enable = true;
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
 
- environment.systemPackages = [
-    (pkgs.waybar.overrideAttrs (oldAttrs: {
-        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      })
-    )
+  environment.systemPackages = [
     pkgs.git
-    pkgs.dunst
     pkgs.cargo
     pkgs.rustc
     pkgs.rust-analyzer
     pkgs.libnotify
     pkgs.wget
-    pkgs.awww
     pkgs.home-manager
     pkgs.kitty
-    pkgs.rofi
     pkgs.vim
     pkgs.zed-editor
     pkgs.proton-vpn
@@ -112,10 +102,10 @@
     pkgs.obsidian
     pkgs.fastfetch
     pkgs.rustdesk
-    pkgs.ollama
+    pkgs.ollama-rocm
   ];
 
-    nixpkgs.config.permittedInsecurePackages = [
+  nixpkgs.config.permittedInsecurePackages = [
     "electron-41.10.7"
   ];
 
@@ -128,4 +118,6 @@
   nix.gc.options = "--delete-older-than 10d";
   nix.settings.auto-optimise-store = true;
 
-  system.stateVersion = "26.05"; # Did you read the comment?
+  system.stateVersion = "26.05";
+
+}
