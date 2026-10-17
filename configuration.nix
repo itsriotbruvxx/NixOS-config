@@ -81,6 +81,19 @@
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
 
+  services.ollama = {
+     enable = true;
+     package = pkgs.ollama-rocm;
+     loadModels = [ 
+        "qwen:7b" 
+        "deepseek-coder:6.7b"
+  ];
+  rocmOverrideGfx = "9.0.6";
+  environmentVariables = {
+    HSA_OVERRIDE_GFX_VERSION = "9.0.6";
+  };
+};
+
   environment.systemPackages = [
     pkgs.git
     pkgs.cargo
@@ -102,7 +115,6 @@
     pkgs.obsidian
     pkgs.fastfetch
     pkgs.rustdesk
-    pkgs.ollama-rocm
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
